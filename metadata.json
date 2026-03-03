@@ -1,0 +1,5 @@
+{
+  "name": "AI Career Intelligence Engine",
+  "description": "Evaluates Computer Science and Engineering students in the Indian job market using Gemini.",
+  "requestFramePermissions": []
+}
