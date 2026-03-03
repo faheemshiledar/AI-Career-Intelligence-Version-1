@@ -1,4 +1,4 @@
-import { GoogleGenAI, Type } from "@google/genai";
+import { GoogleGenAI, Type, ThinkingLevel } from "@google/genai";
 import { ProfileData, EvaluationResult } from "../types";
 
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
@@ -91,6 +91,7 @@ Roadmap must be: Specific, Measurable, Realistic, Execution-focused
     model: "gemini-3.1-pro-preview",
     contents: prompt,
     config: {
+      thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
       responseMimeType: "application/json",
       responseSchema: {
         type: Type.OBJECT,
@@ -207,7 +208,7 @@ Return a JSON object with these keys (leave empty string if not found):
 `;
 
   const response = await ai.models.generateContent({
-    model: "gemini-3.1-pro-preview",
+    model: "gemini-3-flash-preview",
     contents: {
       parts: [
         {
@@ -282,6 +283,7 @@ Advisor:
     model: "gemini-3.1-pro-preview", // Using pro-preview for chatbot as requested
     contents: prompt,
     config: {
+      thinkingConfig: { thinkingLevel: ThinkingLevel.LOW },
       systemInstruction: `You are an advanced AI Career Intelligence Engine acting as a career advisor for a Computer Science student/professional in the Indian job market.
 You are strict, analytical, and data-driven.
 ${profileContext ? `Here is the user's latest evaluation context: ${JSON.stringify(profileContext)}` : ''}
@@ -299,7 +301,7 @@ Evaluation: ${JSON.stringify(profileContext)}
 `;
 
   const response = await ai.models.generateContent({
-    model: "gemini-2.5-flash-lite", // Using flash-lite for fast AI responses as requested
+    model: "gemini-3.1-flash-lite-preview", // Using flash-lite for fast AI responses as requested
     contents: prompt,
   });
 
